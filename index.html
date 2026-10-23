@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Dashboard | Blue Bloom</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a href="#" class="brand" onclick="showView('dashboard')">
+            <div class="brand-icon">✿</div>
+            <div>
+                <h2>Blue Bloom</h2>
+                <p>Your little admin space</p>
+            </div>
+        </a>
+
+        <p class="menu-label">MAIN MENU</p>
+
+        <nav class="nav-menu">
+            <a href="#" id="nav-dashboard" class="active" onclick="showView('dashboard')">
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+            <a href="#users" onclick="showView('dashboard')">
+                <span class="nav-icon">♙</span>
+                Users
+                <span class="nav-badge" id="navTotalUsers">0</span>
+            </a>
+
+            <a href="#overview" onclick="showView('dashboard')">
+                <span class="nav-icon">▦</span>
+                Overview
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <div class="help-icon">☁</div>
+                <h4>Stay organized!</h4>
+                <p>Manage your user records in one simple and friendly space.</p>
+                <div class="help-decoration">♡ &nbsp; ✧ &nbsp; ♡</div>
+            </div>
+
+            <div class="sidebar-footer">
+                Made with care ♡<br>
+                Blue Bloom Dashboard
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="search-box">
+                <span class="search-symbol">⌕</span>
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search users by name or email..."
+                    aria-label="Search users"
+                >
+            </div>
+
+            <div class="topbar-right">
+                <div class="admin-avatar">A</div>
+                <div class="admin-details">
+                    <div class="admin-name">Admin</div>
+                    <div class="admin-role">Administrator</div>
+                </div>
+                <span class="profile-arrow">⌄</span>
+            </div>
+        </header>
+
+        <!-- VIEW: DASHBOARD / USERS LIST -->
+        <section class="content" id="view-dashboard">
+
+            <div class="welcome">
+                <div>
+                    <div class="eyebrow">YOUR PERSONAL WORKSPACE ✧</div>
+                    <h1>Good day, <span>Admin!</span> ♡</h1>
+                    <p>Here's what's happening with your users today.</p>
+                    <div class="date-label">
+                        ✦ &nbsp; A little progress every day
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="showCreateForm()">
+                    <span class="plus">＋</span>
+                    Add New User
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue-icon">♙</div>
+                    <div class="stat-info">
+                        <p>Total Users</p>
+                        <h2 id="statTotalUsers">0</h2>
+                        <div class="stat-note">Registered records</div>
+                    </div>
+                    <div class="stat-decoration">♡</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green-icon">✓</div>
+                    <div class="stat-info">
+                        <p>System Status</p>
+                        <h2 class="status-text">Active</h2>
+                        <div class="stat-note">Dashboard is available</div>
+                    </div>
+                    <div class="stat-decoration">✧</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon purple-icon">♡</div>
+                    <div class="stat-info">
+                        <p>Management</p>
+                        <h2>CRUD</h2>
+                        <div class="stat-note">Create, read, update, delete</div>
+                    </div>
+                    <div class="stat-decoration">♡</div>
+                </div>
+            </div>
+
+            <div class="section-heading" id="users">
+                <div>
+                    <h2>All Users <span class="heading-heart">♡</span></h2>
+                    <p>Here are all the users in your database.</p>
+                </div>
+
+                <span class="total-badge" id="badgeTotalUsers">
+                    0 total users
+                </span>
+            </div>
+
+            <div class="table-card">
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User Information</th>
+                            <th>Email Address</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+
+                <div class="table-footer">
+                    <span id="showingCount">Showing 0 user(s)</span>
+                    <span>Made with care <strong>♡</strong></span>
+                </div>
+            </div>
+
+            <footer class="page-footer">
+                © Blue Bloom · Your simple and friendly CRUD workspace
+            </footer>
+
+        </section>
+
+        <!-- VIEW: CREATE / EDIT USER FORM -->
+        <section class="content" id="view-form" style="display: none;">
+            <div class="welcome">
+                <div>
+                    <div class="eyebrow">USER MANAGEMENT ✧</div>
+                    <h1 id="formTitle">Add a New <span>User!</span> ♡</h1>
+                    <p id="formSubtitle">Fill in the details below to create a new user record.</p>
+                </div>
+                <button class="btn btn-edit" onclick="showView('dashboard')">← Back to Dashboard</button>
+            </div>
+
+            <div class="form-card">
+                <div class="section-heading">
+                    <div>
+                        <h2 id="formHeader">User Information ♡</h2>
+                        <p id="formHeaderSub">Please complete both fields.</p>
+                    </div>
+                </div>
+
+                <p id="errorMessage" style="color:#D95E70; margin-bottom:18px; display:none;"></p>
+
+                <form id="userForm" onsubmit="handleFormSubmit(event)">
+                    <input type="hidden" id="userId" value="">
+
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter full name"
+                            maxlength="255"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="example@email.com"
+                            maxlength="255"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        ＋ Save User
+                    </button>
+
+                    <button type="button" class="btn btn-edit" onclick="showView('dashboard')">
+                        Cancel
+                    </button>
+                </form>
+            </div>
+
+            <footer class="page-footer">
+                Blue Bloom · Made with care ♡
+            </footer>
+        </section>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
